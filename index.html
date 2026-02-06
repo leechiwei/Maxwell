@@ -71,10 +71,15 @@
       <ul class="list" id="nextSteps"></ul>
       <div class="hint">會自動避免重複與高風險操作</div>
     </div>
-    <div class="card span-12">
+    <div class="card span-6">
       <h3>工具入口</h3>
       <div class="muted">Quick Daily Brief（本機）</div>
       <div class="sub">/media/cw/Data/AI_Playground/projects/quick-daily-brief/index.html</div>
+    </div>
+    <div class="card span-6">
+      <h3>Heartbeat 任務</h3>
+      <ul class="list" id="heartbeat"></ul>
+      <div class="hint">來自 HEARTBEAT.md</div>
     </div>
 
     <div class="card span-12">
@@ -105,7 +110,7 @@ const fallback = {
 async function load(){
   let data = fallback;
   try{
-    const res = await fetch("/media/cw/Data/AI_Playground/logs/ops_radar.json", {cache:"no-store"});
+    const res = await fetch("ops_radar.json", {cache:"no-store"});
     if(res.ok) data = await res.json();
   }catch(e){}
 
@@ -126,6 +131,9 @@ async function load(){
   hl.innerHTML = (data.highlights||[]).map(x=>`<li>${x}</li>`).join('');
   const ns = document.getElementById('nextSteps');
   ns.innerHTML = (data.nextSteps||[]).map(x=>`<li>${x}</li>`).join('');
+
+  const hb = document.getElementById('heartbeat');
+  if(hb) hb.innerHTML = (data.heartbeat||[]).map(x=>`<li>${x}</li>`).join('');
 
   const rows = (data.jobs||[]).map(j=>{
     const tag = j.status==='ok'?'ok':(j.status==='warn'?'warn':'bad');

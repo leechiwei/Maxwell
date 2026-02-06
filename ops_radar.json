@@ -1,0 +1,31 @@
+{
+  "status": {"text": "Active", "sub": "Ops Radar updated", "level": "ok"},
+  "lastReview": {"text": "2026-02-06 18:18 +0800", "sub": "Asia/Taipei"},
+  "cost": {"risk": "—", "percent": 0, "sub": "尚未計算"},
+  "highlights": [
+    "啟用 6 小時自我迭代 cron，補記以避免空轉",
+    "同步更新 SOUL/IDENTITY/USER/MEMORY，降低語氣漂移與記憶斷檔"
+  ],
+  "nextSteps": [
+    "確認 cron gateway 可用性，恢復排程讀取",
+    "補上 Ops Radar 的 cost/風險計算規則",
+    "整理近期自我改進條目到更精簡格式"
+  ],
+  "jobs": [
+    {"name": "Ops Radar generator", "status": "unknown", "note": "cron 讀取失敗"},
+    {"name": "self-improve", "status": "unknown", "note": "cron 讀取失敗"},
+    {"name": "heartbeat", "status": "unknown", "note": "cron 讀取失敗"}
+  ],
+  "heartbeat": [
+    "automatically improve yourself (q6h)",
+    "learn random skills (daily)",
+    "ops radar update (q6h)",
+    "cron health check (2x daily)",
+    "message delivery sanity (daily)",
+    "public ops radar live (q6h)",
+    "weekly autopsy report (weekly)",
+    "cron recovery playbook (weekly)",
+    "site snapshot pack (weekly)",
+    "random project incubation (daily)"
+  ]
+}
