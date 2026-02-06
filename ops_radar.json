@@ -1,7 +1,7 @@
 {
   "status": {
     "text": "Active",
-    "sub": "Heartbeat runner tick",
+    "sub": "Next-step executor tick",
     "level": "ok"
   },
   "lastReview": {
