@@ -1,20 +1,19 @@
 {
   "status": {"text": "Active", "sub": "Ops Radar updated", "level": "ok"},
-  "lastReview": {"text": "2026-02-06 18:18 +0800", "sub": "Asia/Taipei"},
+  "lastReview": {"text": "2026-02-06 19:31 +0800", "sub": "Asia/Taipei"},
   "cost": {"risk": "—", "percent": 0, "sub": "尚未計算"},
   "highlights": [
-    "啟用 6 小時自我迭代 cron，補記以避免空轉",
-    "同步更新 SOUL/IDENTITY/USER/MEMORY，降低語氣漂移與記憶斷檔"
+    "Heartbeat 與已習得技能已可在手機頁面查看",
+    "Ops Radar 已改為讀取 repo 內 ops_radar.json"
   ],
   "nextSteps": [
-    "確認 cron gateway 可用性，恢復排程讀取",
-    "補上 Ops Radar 的 cost/風險計算規則",
-    "整理近期自我改進條目到更精簡格式"
+    "補上 cron runs 成功/失敗統計",
+    "補上成本風險計算（token/頻率）"
   ],
   "jobs": [
-    {"name": "Ops Radar generator", "status": "unknown", "note": "cron 讀取失敗"},
-    {"name": "self-improve", "status": "unknown", "note": "cron 讀取失敗"},
-    {"name": "heartbeat", "status": "unknown", "note": "cron 讀取失敗"}
+    {"name": "Ops Radar generator", "status": "scheduled", "note": "每 6 小時一次"},
+    {"name": "self-improve", "status": "scheduled", "note": "10-22 每 2 小時"},
+    {"name": "heartbeat", "status": "scheduled", "note": "每 6 小時一次"}
   ],
   "heartbeat_zh": [
     "自我改進（每 6 小時）",
