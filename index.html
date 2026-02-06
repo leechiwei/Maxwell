@@ -77,9 +77,14 @@
       <div class="sub">/media/cw/Data/AI_Playground/projects/quick-daily-brief/index.html</div>
     </div>
     <div class="card span-6">
-      <h3>Heartbeat 任務</h3>
+      <h3>Heartbeat 任務（中文顯示）</h3>
       <ul class="list" id="heartbeat"></ul>
-      <div class="hint">來自 HEARTBEAT.md</div>
+      <div class="hint">資料來自 HEARTBEAT 設定</div>
+    </div>
+    <div class="card span-12">
+      <h3>已習得技能</h3>
+      <ul class="list" id="skills"></ul>
+      <div class="hint">來自 MEMORY.md</div>
     </div>
 
     <div class="card span-12">
@@ -133,7 +138,10 @@ async function load(){
   ns.innerHTML = (data.nextSteps||[]).map(x=>`<li>${x}</li>`).join('');
 
   const hb = document.getElementById('heartbeat');
-  if(hb) hb.innerHTML = (data.heartbeat||[]).map(x=>`<li>${x}</li>`).join('');
+  if(hb) hb.innerHTML = (data.heartbeat_zh||data.heartbeat||[]).map(x=>`<li>${x}</li>`).join('');
+
+  const sk = document.getElementById('skills');
+  if(sk) sk.innerHTML = (data.skills||[]).map(x=>`<li>${x}</li>`).join('');
 
   const rows = (data.jobs||[]).map(j=>{
     const tag = j.status==='ok'?'ok':(j.status==='warn'?'warn':'bad');

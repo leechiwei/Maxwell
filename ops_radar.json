@@ -16,16 +16,22 @@
     {"name": "self-improve", "status": "unknown", "note": "cron 讀取失敗"},
     {"name": "heartbeat", "status": "unknown", "note": "cron 讀取失敗"}
   ],
-  "heartbeat": [
-    "automatically improve yourself (q6h)",
-    "learn random skills (daily)",
-    "ops radar update (q6h)",
-    "cron health check (2x daily)",
-    "message delivery sanity (daily)",
-    "public ops radar live (q6h)",
-    "weekly autopsy report (weekly)",
-    "cron recovery playbook (weekly)",
-    "site snapshot pack (weekly)",
-    "random project incubation (daily)"
+  "heartbeat_zh": [
+    "自我改進（每 6 小時）",
+    "學習新技巧（每日）",
+    "更新 Ops Radar（每 6 小時）",
+    "排程健康檢查（每日 2 次）",
+    "訊息投遞檢查（每日）",
+    "公開 Ops Radar 同步（每 6 小時）",
+    "每週復盤報告",
+    "排程修復手冊（每週）",
+    "站點快照包（每週）",
+    "每日新專案孵化"
+  ],
+  "skills": [
+    "cron 產出固定送到指定 Discord 頻道：cron.update(...delivery={mode:'announce', channel:'discord', to:'<channelId>'})",
+    "排程無輸出時先用 cron.status / cron.list / cron.runs 定位問題",
+    "用 logs/self_improve.md 記錄「改了什麼＋為什麼」避免自我迭代空轉",
+    "公開 Pages 要把資料放進 repo 內（ops_radar.json）供前端讀取"
   ]
 }
