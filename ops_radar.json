@@ -1,7 +1,7 @@
 {
   "status": {
     "text": "Active",
-    "sub": "Heartbeat runner tick",
+    "sub": "Next-step executor tick",
     "level": "ok"
   },
   "lastReview": {
@@ -22,8 +22,8 @@
     "- 2026-02-06 22:38 +0800 | learned: # 三路配額速查表 | source: docs/quota-reference.md | use: 先讀再做，避免瞎改。"
   ],
   "nextSteps": [
-    "修心跳自動執行（建立 heartbeat runner）",
-    "補上 cron runs 成功/失敗統計（24h 成功率）"
+    "補上 cron runs 成功/失敗統計（24h 成功率）",
+    "整理 heartbeat 自動執行紀錄"
   ],
   "jobs": [
     {
