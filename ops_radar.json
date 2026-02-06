@@ -1,15 +1,15 @@
 {
-  "status": {"text": "Active", "sub": "Ops Radar updated", "level": "ok"},
-  "lastReview": {"text": "2026-02-06 19:53 +0800", "sub": "Asia/Taipei"},
+  "status": {"text": "Active", "sub": "Next-step executor ran", "level": "ok"},
+  "lastReview": {"text": "2026-02-06 22:04 +0800", "sub": "Asia/Taipei"},
   "model": {"name": "openai-codex/gpt-5.2-codex", "sub": "oauth (openai-codex:default)"},
   "cost": {"risk": "低", "percent": 26, "sub": "Tokens 1.0k in / 100 out；Context 163k/400k（41%）；5h 74%｜Day 54%"},
   "highlights": [
-    "已顯示目前模型與成本風險",
-    "Heartbeat 與已習得技能可在手機頁面查看"
+    "已執行 next-step executor（手動）並回寫 Ops Radar",
+    "Heartbeat 任務與已習得技能仍可在手機頁面查看"
   ],
   "nextSteps": [
     "補上 cron runs 成功/失敗統計（顯示 24h 成功率）",
-    "把 next-step executor 實際跑起來並回寫結果"
+    "將 next-step executor 移到自動 Heartbeat 執行紀錄（寫入 logs/self_improve.md）"
   ],
   "jobs": [
     {"name": "Ops Radar generator", "status": "scheduled", "note": "每 6 小時一次"},
