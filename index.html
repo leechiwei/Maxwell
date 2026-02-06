@@ -60,6 +60,11 @@
       <div class="bar"><span id="costBar" style="width:0%"></span></div>
       <div class="sub" id="costSub"></div>
     </div>
+    <div class="card span-4">
+      <h3>目前模型</h3>
+      <div class="big" id="modelName">—</div>
+      <div class="sub" id="modelSub"></div>
+    </div>
 
     <div class="card span-6">
       <h3>今日重點</h3>
@@ -131,6 +136,11 @@ async function load(){
   document.getElementById('costRisk').textContent = data.cost.risk || '—';
   document.getElementById('costSub').textContent = data.cost.sub || '';
   document.getElementById('costBar').style.width = (data.cost.percent||0) + '%';
+
+  const mn = document.getElementById('modelName');
+  const ms = document.getElementById('modelSub');
+  if(mn) mn.textContent = (data.model && data.model.name) ? data.model.name : '—';
+  if(ms) ms.textContent = (data.model && data.model.sub) ? data.model.sub : '';
 
   const hl = document.getElementById('highlights');
   hl.innerHTML = (data.highlights||[]).map(x=>`<li>${x}</li>`).join('');

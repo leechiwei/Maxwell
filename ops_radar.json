@@ -1,7 +1,8 @@
 {
   "status": {"text": "Active", "sub": "Ops Radar updated", "level": "ok"},
-  "lastReview": {"text": "2026-02-06 19:31 +0800", "sub": "Asia/Taipei"},
-  "cost": {"risk": "—", "percent": 0, "sub": "尚未計算"},
+  "lastReview": {"text": "2026-02-06 19:48 +0800", "sub": "Asia/Taipei"},
+  "model": {"name": "openai-codex/gpt-5.2-codex", "sub": "oauth (openai-codex:default)"},
+  "cost": {"risk": "低", "percent": 26, "sub": "Tokens 1.0k in / 100 out；Context 163k/400k（41%）；5h 74%｜Day 54%"},
   "highlights": [
     "Heartbeat 與已習得技能已可在手機頁面查看",
     "Ops Radar 已改為讀取 repo 內 ops_radar.json"
@@ -25,7 +26,9 @@
     "每週復盤報告",
     "排程修復手冊（每週）",
     "站點快照包（每週）",
-    "每日新專案孵化"
+    "每日新專案孵化",
+    "每 30 分鐘執行下一步並重生建議",
+    "每 30 分鐘推送 Ops Radar"
   ],
   "skills": [
     "cron 產出固定送到指定 Discord 頻道：cron.update(...delivery={mode:'announce', channel:'discord', to:'<channelId>'})",
