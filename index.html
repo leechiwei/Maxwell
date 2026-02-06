@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenClaw Ops Radar</title>
+  <style>
+    :root{
+      --bg:#0b0f14;--panel:#121925;--ink:#e6eef7;--muted:#9bb0c7;--accent:#6ee7ff;--ok:#6ee7a8;--warn:#ffd166;--bad:#ff6b6b;
+    }
+    *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
+    body{margin:0;background:var(--bg);color:var(--ink);}
+    header{padding:22px 24px;border-bottom:1px solid #1d2a3a;display:flex;align-items:center;gap:12px;}
+    header .dot{width:10px;height:10px;border-radius:999px;background:var(--accent);box-shadow:0 0 12px var(--accent);} 
+    .wrap{padding:20px;max-width:1200px;margin:0 auto;}
+    .grid{display:grid;gap:14px;grid-template-columns:repeat(12,1fr);} 
+    .card{background:var(--panel);border:1px solid #1d2a3a;border-radius:14px;padding:16px;}
+    .card h3{margin:0 0 8px 0;font-size:14px;color:var(--muted);font-weight:600;}
+    .big{font-size:26px;font-weight:800;letter-spacing:.2px;}
+    .sub{color:var(--muted);font-size:12px;}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;}
+    .ok{background:rgba(110,231,168,.15);color:var(--ok);}
+    .warn{background:rgba(255,209,102,.15);color:var(--warn);}
+    .bad{background:rgba(255,107,107,.15);color:var(--bad);} 
+    .span-3{grid-column:span 3;} .span-4{grid-column:span 4;} .span-5{grid-column:span 5;} .span-6{grid-column:span 6;} .span-7{grid-column:span 7;} .span-8{grid-column:span 8;} .span-12{grid-column:span 12;}
+    .list{margin:0;padding-left:18px;color:var(--ink);} 
+    .list li{margin:6px 0;}
+    .muted{color:var(--muted);} 
+    .bar{height:8px;border-radius:999px;background:#1a2636;overflow:hidden;}
+    .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#8aa7ff);} 
+    footer{padding:18px 24px;color:var(--muted);font-size:12px;border-top:1px solid #1d2a3a;}
+    .hint{font-size:12px;color:var(--muted);} 
+  </style>
+</head>
+<body>
+<header>
+  <div class="dot"></div>
+  <div>
+    <div style="font-weight:800">OpenClaw Ops Radar</div>
+    <div class="sub">Daily health + cost + action insights</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card span-4">
+      <h3>狀態</h3>
+      <div class="big" id="statusText">載入中…</div>
+      <div class="sub" id="statusSub"></div>
+      <div class="pill ok" id="statusPill">OK</div>
+    </div>
+    <div class="card span-4">
+      <h3>最近一次回顧</h3>
+      <div class="big" id="lastReview">—</div>
+      <div class="sub" id="lastReviewSub"></div>
+    </div>
+    <div class="card span-4">
+      <h3>本日成本風險</h3>
+      <div class="big" id="costRisk">—</div>
+      <div class="bar"><span id="costBar" style="width:0%"></span></div>
+      <div class="sub" id="costSub"></div>
+    </div>
+
+    <div class="card span-6">
+      <h3>今日重點</h3>
+      <ul class="list" id="highlights"></ul>
+      <div class="hint">來自 logs/self_improve.md 與 ops_radar.json</div>
+    </div>
+    <div class="card span-6">
+      <h3>下一步建議</h3>
+      <ul class="list" id="nextSteps"></ul>
+      <div class="hint">會自動避免重複與高風險操作</div>
+    </div>
+
+    <div class="card span-12">
+      <h3>任務健康</h3>
+      <div id="jobsTable"></div>
+      <div class="hint">顯示近期 cron 成功/失敗與延遲。</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  資料來源：/media/cw/Data/AI_Playground/logs/ops_radar.json（若無則顯示預設範例）
+</footer>
+
+<script>
+const fallback = {
+  status: {text:"Healthy", sub:"Gateway + cron 在路上", level:"ok"},
+  lastReview: {text:"—", sub:"尚未產生回顧"},
+  cost: {risk:"Low", percent:15, sub:"低風險，維持現狀"},
+  highlights: ["cron 與 Discord 投遞已綁定此頻道", "自我迭代每 6 小時運作", "只保留 main agent 避免跑掉"],
+  nextSteps: ["完成 ops_radar 產生器，讓資料實時更新", "補上 cron runs 讀取與失敗自救"],
+  jobs: [
+    {name:"每日健康打卡", status:"pending", note:"尚無 run"},
+    {name:"天氣提醒（秀水）", status:"pending", note:"下一輪 07:30/19:30"},
+  ]
+};
+
+async function load(){
+  let data = fallback;
+  try{
+    const res = await fetch("/media/cw/Data/AI_Playground/logs/ops_radar.json", {cache:"no-store"});
+    if(res.ok) data = await res.json();
+  }catch(e){}
+
+  const pill = document.getElementById('statusPill');
+  document.getElementById('statusText').textContent = data.status.text;
+  document.getElementById('statusSub').textContent = data.status.sub || '';
+  pill.className = 'pill ' + (data.status.level||'ok');
+  pill.textContent = (data.status.level||'ok').toUpperCase();
+
+  document.getElementById('lastReview').textContent = data.lastReview.text || '—';
+  document.getElementById('lastReviewSub').textContent = data.lastReview.sub || '';
+
+  document.getElementById('costRisk').textContent = data.cost.risk || '—';
+  document.getElementById('costSub').textContent = data.cost.sub || '';
+  document.getElementById('costBar').style.width = (data.cost.percent||0) + '%';
+
+  const hl = document.getElementById('highlights');
+  hl.innerHTML = (data.highlights||[]).map(x=>`<li>${x}</li>`).join('');
+  const ns = document.getElementById('nextSteps');
+  ns.innerHTML = (data.nextSteps||[]).map(x=>`<li>${x}</li>`).join('');
+
+  const rows = (data.jobs||[]).map(j=>{
+    const tag = j.status==='ok'?'ok':(j.status==='warn'?'warn':'bad');
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #223148;">
+      <div style="flex:1;font-weight:700">${j.name}</div>
+      <div class="pill ${tag}">${j.status}</div>
+      <div class="muted" style="flex:2">${j.note||''}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('jobsTable').innerHTML = rows || '<div class="muted">(no data)</div>';
+}
+load();
+</script>
+</body>
+</html>
