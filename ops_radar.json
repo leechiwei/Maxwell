@@ -1,15 +1,15 @@
 {
   "status": {"text": "Active", "sub": "Ops Radar updated", "level": "ok"},
-  "lastReview": {"text": "2026-02-06 19:48 +0800", "sub": "Asia/Taipei"},
+  "lastReview": {"text": "2026-02-06 19:53 +0800", "sub": "Asia/Taipei"},
   "model": {"name": "openai-codex/gpt-5.2-codex", "sub": "oauth (openai-codex:default)"},
   "cost": {"risk": "低", "percent": 26, "sub": "Tokens 1.0k in / 100 out；Context 163k/400k（41%）；5h 74%｜Day 54%"},
   "highlights": [
-    "Heartbeat 與已習得技能已可在手機頁面查看",
-    "Ops Radar 已改為讀取 repo 內 ops_radar.json"
+    "已顯示目前模型與成本風險",
+    "Heartbeat 與已習得技能可在手機頁面查看"
   ],
   "nextSteps": [
-    "補上 cron runs 成功/失敗統計",
-    "補上成本風險計算（token/頻率）"
+    "補上 cron runs 成功/失敗統計（顯示 24h 成功率）",
+    "把 next-step executor 實際跑起來並回寫結果"
   ],
   "jobs": [
     {"name": "Ops Radar generator", "status": "scheduled", "note": "每 6 小時一次"},
