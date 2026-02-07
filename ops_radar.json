@@ -22,9 +22,9 @@
     "- 2026-02-07 11:00 +0800 | heartbeat: auto-improve tick | 小結：持續自動跑心跳，保持可追蹤痕跡。"
   ],
   "nextSteps": [
-    "做 15 分鐘微工具：今日心情溫度計（單頁）",
     "做 15 分鐘微工具：log 一鍵整理小頁",
-    "把 ops_radar 變成一張卡片風格 HTML"
+    "把 ops_radar 變成一張卡片風格 HTML",
+    "加一句『人味短評』到 ops_radar highlights"
   ],
   "jobs": [
     {
@@ -66,6 +66,7 @@
   "nextStepHistory": [
     "2026-02-07 11:06 +0800 | 補上 cron runs 成功/失敗統計（24h 成功率） | skipped",
     "2026-02-07 12:00 +0800 | 整理 self_improve 重複行 | executed",
-    "2026-02-07 12:30 +0800 | 刷新 ops_radar highlights | skipped"
+    "2026-02-07 12:30 +0800 | 刷新 ops_radar highlights | skipped",
+    "2026-02-07 13:00 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed"
   ]
 }
