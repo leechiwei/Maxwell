@@ -1,7 +1,7 @@
 {
   "status": {
     "text": "Active",
-    "sub": "Heartbeat runner tick",
+    "sub": "Next-step executor tick",
     "level": "ok"
   },
   "lastReview": {
@@ -22,8 +22,9 @@
     "- 2026-02-07 11:00 +0800 | heartbeat: auto-improve tick | 小結：持續自動跑心跳，保持可追蹤痕跡。"
   ],
   "nextSteps": [
-    "補上 cron runs 成功/失敗統計（24h 成功率）",
-    "整理 heartbeat 自動執行紀錄"
+    "整理 self_improve 重複行",
+    "刷新 ops_radar highlights",
+    "清理 heartbeat_state 舊紀錄"
   ],
   "jobs": [
     {
@@ -61,5 +62,8 @@
     "排程無輸出時先用 cron.status / cron.list / cron.runs 定位問題",
     "用 logs/self_improve.md 記錄「改了什麼＋為什麼」避免自我迭代空轉",
     "公開 Pages 要把資料放進 repo 內（ops_radar.json）供前端讀取"
+  ],
+  "nextStepHistory": [
+    "2026-02-07 11:06 +0800 | 補上 cron runs 成功/失敗統計（24h 成功率） | skipped"
   ]
 }
