@@ -49,10 +49,23 @@ small{color:#666}
 
 <script>
 async function load(){
-  const res = await fetch('../0050-live/data.json?ts=' + Date.now());
-  if(!res.ok){ return null; }
-  const payload = await res.json();
-  return payload.data || [];
+  try{
+    const res = await fetch('../0050-live/data.json?ts=' + Date.now());
+    if(!res.ok){ return {data:[], error:`fetch failed: ${res.status}`}; }
+    const payload = await res.json();
+    return {data: payload.data || [], error: null};
+  }catch(e){
+    return {data:[], error: e?.message || 'fetch error'};
+  }
+}
+
+function demoData(n=300){
+  let p=70; const out=[];
+  for(let i=0;i<n;i++){
+    p = Math.max(1, p + (Math.random()-0.48)*0.3);
+    out.push({c: p});
+  }
+  return out;
 }
 
 function draw(series){
@@ -87,12 +100,15 @@ function volatility(returns){
 }
 
 async function run(){
-  const data = await load();
-  if(!data || !data.length){
-    document.getElementById('summary').textContent='尚無資料'; return;
+  const {data, error} = await load();
+  let usedDemo=false;
+  let src=data;
+  if(!src || !src.length){
+    src = demoData(320);
+    usedDemo=true;
   }
   const windowN = Math.max(50, +document.getElementById('window').value||300);
-  const series = data.slice(-windowN).map(d=>d.c);
+  const series = src.slice(-windowN).map(d=>d.c);
   const cash0 = +document.getElementById('cash').value;
   const dca = +document.getElementById('dca').value;
   const fee = +document.getElementById('fee').value/100;
@@ -169,7 +185,9 @@ async function run(){
   const vol = volatility(rets);
   const mdd = maxDrawdown(equity);
 
-  document.getElementById('summary').textContent = `期末資產 ${Math.round(total).toLocaleString()} 元（投入 ${Math.round(invested).toLocaleString()} 元）`;
+  const note = usedDemo ? '（示範資料）' : '';
+  const errNote = error ? `｜資料讀取失敗：${error}` : '';
+  document.getElementById('summary').textContent = `期末資產 ${Math.round(total).toLocaleString()} 元（投入 ${Math.round(invested).toLocaleString()} 元）${note}${errNote}`;
   document.getElementById('metrics').innerHTML = `
     <li>最大回撤：${(mdd*100).toFixed(2)}%</li>
     <li>波動（log return std）：${vol.toFixed(4)}</li>
