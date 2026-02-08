@@ -28,7 +28,7 @@ small{color:#666}
       <option value='hold'>只持有現金</option>
       <option value='ma'>策略：短長均線交叉（20/60）</option>
       <option value='mom'>策略：動能（30）</option>
-      <option value='mr'>策略：均值回歸（60, 1.2σ）</option>
+      <option value='mr'>策略：均值回歸（60, 0.6σ）</option>
     </select></label>
     <label>回測視窗（最後 N 筆）<input id='window' type='number' value='300'></label>
   </div>
@@ -156,7 +156,7 @@ async function run(){
       const m = sma(series,i,60);
       const s = std(series,i,60);
       if(m && s){
-        const target = price < (m-1.2*s) ? 1 : 0;
+        const target = price < (m-0.6*s) ? 1 : 0;
         if(target===1 && shares===0) buy = cash;
         if(target===0 && shares>0) sell = shares;
       }
@@ -188,13 +188,18 @@ async function run(){
   const note = usedDemo ? '（示範資料）' : '';
   const errNote = error ? `｜資料讀取失敗：${error}` : '';
   document.getElementById('summary').textContent = `期末資產 ${Math.round(total).toLocaleString()} 元（投入 ${Math.round(invested).toLocaleString()} 元）${note}${errNote}`;
+  const tradeNote = tx.length===0 ? '<li>本次策略未觸發交易，試試改策略或放大回測視窗。</li>' : '';
   document.getElementById('metrics').innerHTML = `
     <li>最大回撤：${(mdd*100).toFixed(2)}%</li>
     <li>波動（log return std）：${vol.toFixed(4)}</li>
-    <li>樣本點數：${series.length}</li>`;
-  document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('');
+    <li>樣本點數：${series.length}</li>
+    ${tradeNote}`;
+  document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('') || '<li>（無交易紀錄）</li>';
 }
 
 document.getElementById('run').onclick=run;
+['strategy','window','cash','dca','fee','slip'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', run);
+});
 run();
 </script>
