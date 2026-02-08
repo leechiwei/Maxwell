@@ -1,7 +1,7 @@
 {
   "status": {
     "text": "Active",
-    "sub": "Heartbeat maintenance",
+    "sub": "Next-step executor tick",
     "level": "ok"
   },
   "lastReview": {
@@ -18,9 +18,9 @@
     "- 2026-02-08 10:34 +0800 | heartbeat: random project | Focus Sprint（25 分鐘計時器）上線。"
   ],
   "nextSteps": [
-    "補跑 cron.run 測試：0050 live / Agent / summary",
-    "同步 ops_radar.json 到 projects/ops-radar 並推送",
-    "Focus Sprint 加上結束提示音（本地）"
+    "專案：投資模擬器（本地、無下單）",
+    "專案：波動預測（教育版基線模型）",
+    "專案：手機可玩小遊戲（自我對話/互動）"
   ],
   "jobs": [
     {
@@ -62,8 +62,6 @@
     "random project incubation (daily)"
   ],
   "nextStepHistory": [
-    "2026-02-07 16:30 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
-    "2026-02-07 17:00 +0800 | 做 15 分鐘微工具：log 一鍵整理小頁 | executed",
     "2026-02-07 18:00 +0800 | 把 ops_radar 變成一張卡片風格 HTML | executed",
     "2026-02-07 18:42 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
     "2026-02-07 18:53 +0800 | 加一句『人味短評』到 ops_radar highlights | executed",
@@ -92,6 +90,7 @@
     "2026-02-08 10:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-08 11:00 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-08 11:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
-    "2026-02-08 10:34 +0800 | Focus Sprint（本地 25 分鐘計時器） | executed"
+    "2026-02-08 10:34 +0800 | Focus Sprint（本地 25 分鐘計時器） | executed",
+    "2026-02-08 12:30 +0800 | 補跑 cron.run 測試：0050 live / Agent / summary | skipped"
   ]
 }
