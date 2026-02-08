@@ -62,7 +62,6 @@
     "random project incubation (daily)"
   ],
   "nextStepHistory": [
-    "2026-02-07 18:00 +0800 | 把 ops_radar 變成一張卡片風格 HTML | executed",
     "2026-02-07 18:42 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
     "2026-02-07 18:53 +0800 | 加一句『人味短評』到 ops_radar highlights | executed",
     "2026-02-07 19:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
@@ -91,6 +90,7 @@
     "2026-02-08 11:00 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-08 11:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-08 10:34 +0800 | Focus Sprint（本地 25 分鐘計時器） | executed",
-    "2026-02-08 12:30 +0800 | 補跑 cron.run 測試：0050 live / Agent / summary | skipped"
+    "2026-02-08 12:30 +0800 | 補跑 cron.run 測試：0050 live / Agent / summary | skipped",
+    "2026-02-08 13:00 +0800 | 專案：投資模擬器（本地、無下單） | executed"
   ]
 }
