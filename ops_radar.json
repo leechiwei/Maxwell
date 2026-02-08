@@ -1,11 +1,11 @@
 {
   "status": {
     "text": "Active",
-    "sub": "Next-step executor tick",
+    "sub": "Heartbeat runner tick",
     "level": "ok"
   },
   "lastReview": {
-    "text": "2026-02-08 10:34 +0800",
+    "text": "2026-02-08 18:00 +0800",
     "sub": "Asia/Taipei"
   },
   "cost": {
@@ -14,8 +14,8 @@
     "sub": "heartbeat/manual + 4 enabled cron jobs"
   },
   "highlights": [
-    "- 2026-02-08 10:34 +0800 | heartbeat: auto-improve | 投資模擬器加入本金/收益拆分。",
-    "- 2026-02-08 10:34 +0800 | heartbeat: random project | Focus Sprint（25 分鐘計時器）上線。"
+    "- 2026-02-08 17:30 +0800 | next-step executor | executed: 專案：投資模擬器（本地、無下單）",
+    "- 2026-02-08 18:00 +0800 | heartbeat: auto-improve tick | 小結：持續自動跑心跳，保持可追蹤痕跡。"
   ],
   "nextSteps": [
     "專案：投資模擬器（本地、無下單）",
