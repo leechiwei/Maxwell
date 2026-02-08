@@ -30,6 +30,7 @@ small{color:#666}
       <option value='ma'>策略：短長均線交叉（20/60）</option>
       <option value='mom'>策略：動能（30）</option>
       <option value='mr'>策略：均值回歸（60, 0.6σ）</option>
+      <option value='force'>測試：強制買入（首筆）</option>
     </select></label>
     <label>回測視窗（最後 N 筆）<input id='window' type='number' value='300'></label>
   </div>
@@ -110,10 +111,10 @@ async function run(){
   }
   const windowN = Math.max(50, +document.getElementById('window').value||300);
   const series = src.slice(-windowN).map(d=>d.c);
-  const cash0 = +document.getElementById('cash').value;
-  const dca = +document.getElementById('dca').value;
-  const fee = +document.getElementById('fee').value/100;
-  const slip = +document.getElementById('slip').value/100;
+  const cash0 = +document.getElementById('cash').value || 100000;
+  const dca = +document.getElementById('dca').value || 1000;
+  const fee = (+document.getElementById('fee').value || 0)/100;
+  const slip = (+document.getElementById('slip').value || 0)/100;
   const strategy = document.getElementById('strategy').value;
 
   function sma(arr, i, n){
@@ -135,6 +136,7 @@ async function run(){
 
     if(strategy==='lump' && i===0) buy = cash;
     if(strategy==='dca' && i%30===0) buy = dca; // every 30 mins
+    if(strategy==='force' && i===0) buy = Math.min(cash, dca>0?dca:cash);
 
     if(strategy==='ma'){
       const s = sma(series,i,20);
@@ -197,6 +199,7 @@ async function run(){
     <li>樣本點數：${series.length}</li>
     <li>價格區間：${minP.toFixed(2)} ~ ${maxP.toFixed(2)}</li>
     <li>交易筆數：${tx.length}</li>
+    <li>debug：strategy=${strategy}｜cash=${cash0}｜dca=${dca}｜fee=${fee}｜slip=${slip}｜p0=${series[0]?.toFixed?.(2)}</li>
     ${tradeNote}`;
   document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('') || '<li>（無交易紀錄）</li>';
 }
