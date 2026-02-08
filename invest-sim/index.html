@@ -11,6 +11,7 @@ small{color:#666}
 </style>
 <h1>0050 回測模擬（真實 1m 資料）</h1>
 <p><small>資料來源：Yahoo Finance 1 分鐘（近 7 天）。本頁僅教育用途。</small></p>
+<p><small id='ver'>版本：載入中…</small></p>
 
 <div class='card'>
   <div class='row'>
@@ -23,7 +24,7 @@ small{color:#666}
   </div>
   <div class='row'>
     <label>策略<select id='strategy'>
-      <option value='dca'>定期定額（每 30 分鐘）</option>
+      <option value='dca' selected>定期定額（每 30 分鐘）</option>
       <option value='lump'>一次買入</option>
       <option value='hold'>只持有現金</option>
       <option value='ma'>策略：短長均線交叉（20/60）</option>
@@ -189,10 +190,13 @@ async function run(){
   const errNote = error ? `｜資料讀取失敗：${error}` : '';
   document.getElementById('summary').textContent = `期末資產 ${Math.round(total).toLocaleString()} 元（投入 ${Math.round(invested).toLocaleString()} 元）${note}${errNote}`;
   const tradeNote = tx.length===0 ? '<li>本次策略未觸發交易，試試改策略或放大回測視窗。</li>' : '';
+  const minP=Math.min(...series), maxP=Math.max(...series);
   document.getElementById('metrics').innerHTML = `
     <li>最大回撤：${(mdd*100).toFixed(2)}%</li>
     <li>波動（log return std）：${vol.toFixed(4)}</li>
     <li>樣本點數：${series.length}</li>
+    <li>價格區間：${minP.toFixed(2)} ~ ${maxP.toFixed(2)}</li>
+    <li>交易筆數：${tx.length}</li>
     ${tradeNote}`;
   document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('') || '<li>（無交易紀錄）</li>';
 }
@@ -201,5 +205,7 @@ document.getElementById('run').onclick=run;
 ['strategy','window','cash','dca','fee','slip'].forEach(id=>{
   document.getElementById(id).addEventListener('change', run);
 });
+const ver = new Date().toISOString().replace('T',' ').slice(0,19);
+document.getElementById('ver').textContent = `版本：${ver}`;
 run();
 </script>
