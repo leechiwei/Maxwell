@@ -136,7 +136,7 @@ async function run(){
 
     if(strategy==='lump' && i===0) buy = cash;
     if(strategy==='dca' && i%30===0) buy = dca; // every 30 mins
-    if(strategy==='force' && i===0) buy = Math.min(cash, dca>0?dca:cash);
+    if(strategy==='force' && i===0) buy = (dca>0?dca:cash);
 
     if(strategy==='ma'){
       const s = sma(series,i,20);
@@ -166,11 +166,17 @@ async function run(){
     }
 
     if(buy>0){
-      const cost = buy*(1+fee+slip);
+      let cost = buy*(1+fee+slip);
+      if(strategy==='force' && i===0 && cash<cost){
+        buy = cash/(1+fee+slip);
+        cost = buy*(1+fee+slip);
+      }
       if(cash>=cost){
         const qty = buy/price;
         shares += qty; cash -= cost; invested += buy;
         tx.push(`第${i+1}分鐘：買入 ${qty.toFixed(3)} 股 @ ${price.toFixed(2)}，費用 ${(cost-buy).toFixed(0)}`);
+      }else if(strategy==='force' && i===0){
+        tx.push(`DEBUG：force 買入失敗 cash=${cash.toFixed(2)} cost=${cost.toFixed(2)}`);
       }
     }
     if(sell>0){
@@ -199,7 +205,7 @@ async function run(){
     <li>樣本點數：${series.length}</li>
     <li>價格區間：${minP.toFixed(2)} ~ ${maxP.toFixed(2)}</li>
     <li>交易筆數：${tx.length}</li>
-    <li>debug：strategy=${strategy}｜cash=${cash0}｜dca=${dca}｜fee=${fee}｜slip=${slip}｜p0=${series[0]?.toFixed?.(2)}</li>
+    <li>debug：strategy=${strategy}｜cash=${cash0}｜dca=${dca}｜fee=${fee}｜slip=${slip}｜p0=${series[0]?.toFixed?.(2)}｜p1=${series[1]?.toFixed?.(2)}</li>
     ${tradeNote}`;
   document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('') || '<li>（無交易紀錄）</li>';
 }
