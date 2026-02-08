@@ -1,75 +1,73 @@
 {
   "status": {
     "text": "Active",
-    "sub": "Next-step executor tick",
+    "sub": "Heartbeat maintenance",
     "level": "ok"
   },
   "lastReview": {
-    "text": "2026-02-08 11:30 +0800",
+    "text": "2026-02-08 10:34 +0800",
     "sub": "Asia/Taipei"
   },
-  "model": {
-    "name": "openai-codex/gpt-5.2-codex",
-    "sub": "oauth (openai-codex:default)"
-  },
   "cost": {
-    "risk": "中",
-    "percent": 44,
-    "sub": "Tokens 624 in / 94 out；Context 175k/400k（44%）；5h 56%｜Day 48%"
+    "risk": "低",
+    "percent": 10,
+    "sub": "heartbeat/manual + 4 enabled cron jobs"
   },
   "highlights": [
-    "- 2026-02-08 11:00 +0800 | next-step executor | executed: 專案：投資模擬器（本地、無下單）",
-    "- 2026-02-08 11:30 +0800 | heartbeat: auto-improve tick | 小結：持續自動跑心跳，保持可追蹤痕跡。"
+    "- 2026-02-08 10:34 +0800 | heartbeat: auto-improve | 投資模擬器加入本金/收益拆分。",
+    "- 2026-02-08 10:34 +0800 | heartbeat: random project | Focus Sprint（25 分鐘計時器）上線。"
   ],
   "nextSteps": [
-    "專案：投資模擬器（本地、無下單）",
-    "專案：波動預測（教育版基線模型）",
-    "專案：手機可玩小遊戲（自我對話/互動）"
+    "補跑 cron.run 測試：0050 live / Agent / summary",
+    "同步 ops_radar.json 到 projects/ops-radar 並推送",
+    "Focus Sprint 加上結束提示音（本地）"
   ],
   "jobs": [
     {
-      "name": "Ops Radar generator",
-      "status": "scheduled",
-      "note": "每 6 小時一次"
+      "name": "0050 live data update (1m)",
+      "status": "warn",
+      "note": "enabled but no runs recorded"
     },
     {
-      "name": "self-improve",
-      "status": "scheduled",
-      "note": "10-22 每 2 小時"
+      "name": "Agent (every 30m)",
+      "status": "warn",
+      "note": "enabled but no runs recorded"
     },
     {
-      "name": "heartbeat",
-      "status": "manual",
-      "note": "目前手動觸發"
+      "name": "空閒時段後台工作（每兩小時）",
+      "status": "ok",
+      "note": "last run ok (cron.runs)"
+    },
+    {
+      "name": "Self-iterate review (every 6h)",
+      "status": "ok",
+      "note": "last run ok (cron.runs)"
+    },
+    {
+      "name": "Self-iterate review summary (every 6h, DM)",
+      "status": "warn",
+      "note": "enabled but no runs recorded"
     }
   ],
-  "heartbeat_zh": [
-    "自我改進（每 6 小時）",
-    "學習新技巧（每日）",
-    "更新 Ops Radar（每 6 小時）",
-    "排程健康檢查（每日 2 次）",
-    "訊息投遞檢查（每日）",
-    "公開 Ops Radar 同步（每 6 小時）",
-    "每週復盤報告",
-    "排程修復手冊（每週）",
-    "站點快照包（每週）",
-    "每日新專案孵化",
-    "每 30 分鐘執行下一步並重生建議",
-    "每 30 分鐘推送 Ops Radar"
-  ],
-  "skills": [
-    "cron 產出固定送到指定 Discord 頻道：cron.update(...delivery={mode:'announce', channel:'discord', to:'<channelId>'})",
-    "排程無輸出時先用 cron.status / cron.list / cron.runs 定位問題",
-    "用 logs/self_improve.md 記錄「改了什麼＋為什麼」避免自我迭代空轉",
-    "公開 Pages 要把資料放進 repo 內（ops_radar.json）供前端讀取"
+  "heartbeat": [
+    "automatically improve yourself (q6h)",
+    "learn random skills (daily)",
+    "ops radar update (q6h)",
+    "cron health check (2x daily)",
+    "message delivery sanity (daily)",
+    "public ops radar live (q6h)",
+    "weekly autopsy report (weekly)",
+    "cron recovery playbook (weekly)",
+    "site snapshot pack (weekly)",
+    "random project incubation (daily)"
   ],
   "nextStepHistory": [
     "2026-02-07 16:30 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
-    "2026-02-07 17:00 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
-    "2026-02-07 18:00 +0800 | 做 15 分鐘微工具：log 一鍵整理小頁 | executed",
-    "2026-02-07 18:42 +0800 | 把 ops_radar 變成一張卡片風格 HTML | executed",
+    "2026-02-07 17:00 +0800 | 做 15 分鐘微工具：log 一鍵整理小頁 | executed",
+    "2026-02-07 18:00 +0800 | 把 ops_radar 變成一張卡片風格 HTML | executed",
+    "2026-02-07 18:42 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
     "2026-02-07 18:53 +0800 | 加一句『人味短評』到 ops_radar highlights | executed",
-    "2026-02-07 19:30 +0800 | 做 15 分鐘微工具：今日心情溫度計（單頁） | executed",
+    "2026-02-07 19:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-07 20:00 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-07 20:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-07 21:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
@@ -93,6 +91,7 @@
     "2026-02-08 09:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-08 10:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
     "2026-02-08 11:00 +0800 | 專案：投資模擬器（本地、無下單） | executed",
-    "2026-02-08 11:30 +0800 | 專案：投資模擬器（本地、無下單） | executed"
+    "2026-02-08 11:30 +0800 | 專案：投資模擬器（本地、無下單） | executed",
+    "2026-02-08 10:34 +0800 | Focus Sprint（本地 25 分鐘計時器） | executed"
   ]
 }
