@@ -35,8 +35,12 @@ small{color:#666}
     <label>回測視窗（最後 N 筆）<input id='window' type='number' value='300'></label>
   </div>
   <div class='row'>
-    <label>均值回歸門檻 k（σ）<input id='mrk' type='number' value='0.3' step='0.1'></label>
+    <label>均值回歸門檻 k（σ）<input id='mrk' type='number' value='0.2' step='0.05'></label>
+    <label>均值回歸視窗 N<input id='mrn' type='number' value='20'></label>
+  </div>
+  <div class='row'>
     <label>動能視窗（N）<input id='momk' type='number' value='30'></label>
+    <span></span>
   </div>
   <button id='run'>開始回測</button>
 </div>
@@ -120,7 +124,8 @@ async function run(){
   const fee = (+document.getElementById('fee').value || 0)/100;
   const slip = (+document.getElementById('slip').value || 0)/100;
   const strategy = document.getElementById('strategy').value;
-  const mrk = +document.getElementById('mrk').value || 0.3;
+  const mrk = +document.getElementById('mrk').value || 0.2;
+  const mrn = +document.getElementById('mrn').value || 20;
   const momk = +document.getElementById('momk').value || 30;
 
   function sma(arr, i, n){
@@ -162,8 +167,8 @@ async function run(){
       }
     }
     if(strategy==='mr'){
-      const m = sma(series,i,60);
-      const s = std(series,i,60);
+      const m = sma(series,i,mrn);
+      const s = std(series,i,mrn);
       if(m && s){
         if(price < (m-mrk*s) && shares===0) buy = cash;
         if(price > (m+mrk*s) && shares>0) sell = shares;
@@ -210,13 +215,13 @@ async function run(){
     <li>樣本點數：${series.length}</li>
     <li>價格區間：${minP.toFixed(2)} ~ ${maxP.toFixed(2)}</li>
     <li>交易筆數：${tx.length}</li>
-    <li>debug：strategy=${strategy}｜cash=${cash0}｜dca=${dca}｜fee=${fee}｜slip=${slip}｜mrk=${mrk}｜momk=${momk}｜p0=${series[0]?.toFixed?.(2)}｜p1=${series[1]?.toFixed?.(2)}</li>
+    <li>debug：strategy=${strategy}｜cash=${cash0}｜dca=${dca}｜fee=${fee}｜slip=${slip}｜mrk=${mrk}｜mrn=${mrn}｜momk=${momk}｜p0=${series[0]?.toFixed?.(2)}｜p1=${series[1]?.toFixed?.(2)}</li>
     ${tradeNote}`;
   document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('') || '<li>（無交易紀錄）</li>';
 }
 
 document.getElementById('run').onclick=run;
-['strategy','window','cash','dca','fee','slip','mrk','momk'].forEach(id=>{
+['strategy','window','cash','dca','fee','slip','mrk','mrn','momk'].forEach(id=>{
   document.getElementById(id).addEventListener('change', run);
 });
 const ver = new Date().toISOString().replace('T',' ').slice(0,19);
