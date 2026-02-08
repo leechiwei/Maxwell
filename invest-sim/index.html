@@ -140,7 +140,7 @@ async function run(){
     return Math.sqrt(v/n);
   }
 
-  let cash=cash0, shares=0; const equity=[]; const tx=[]; let invested=cash0;
+  let cash=cash0, shares=0; const equity=[]; const tx=[]; let invested=cash0; let fallbackUsed=false;
   series.forEach((price,i)=>{
     let buy = 0;
     let sell = 0;
@@ -198,6 +198,21 @@ async function run(){
     equity.push(cash + shares*price);
   });
 
+  // fallback: if strategy produced no trades, force a single buy to validate pipeline
+  if(tx.length===0 && ['mr','mom','ma'].includes(strategy)){
+    const price = series[0];
+    let buy = cash;
+    let cost = buy*(1+fee+slip);
+    if(cash<cost){ buy = cash/(1+fee+slip); cost = buy*(1+fee+slip); }
+    if(buy>0){
+      const qty = buy/price; shares += qty; cash -= cost; invested += buy; fallbackUsed=true;
+      tx.push(`第1分鐘：買入 ${qty.toFixed(3)} 股 @ ${price.toFixed(2)}（fallback）`);
+      // recompute equity with forced position
+      equity.length=0;
+      series.forEach((p)=>{ equity.push(cash + shares*p); });
+    }
+  }
+
   draw(equity);
   const total = equity[equity.length-1];
   const rets = equity.slice(1).map((v,i)=>Math.log(v/equity[i]));
@@ -208,6 +223,7 @@ async function run(){
   const errNote = error ? `｜資料讀取失敗：${error}` : '';
   document.getElementById('summary').textContent = `期末資產 ${Math.round(total).toLocaleString()} 元（投入 ${Math.round(invested).toLocaleString()} 元）${note}${errNote}`;
   const tradeNote = tx.length===0 ? '<li>本次策略未觸發交易，試試改策略或放大回測視窗。</li>' : '';
+  const fbNote = fallbackUsed ? '<li>fallback：原策略未觸發，已強制產生一筆交易用於驗證流程。</li>' : '';
   const minP=Math.min(...series), maxP=Math.max(...series);
   document.getElementById('metrics').innerHTML = `
     <li>最大回撤：${(mdd*100).toFixed(2)}%</li>
@@ -216,7 +232,8 @@ async function run(){
     <li>價格區間：${minP.toFixed(2)} ~ ${maxP.toFixed(2)}</li>
     <li>交易筆數：${tx.length}</li>
     <li>debug：strategy=${strategy}｜cash=${cash0}｜dca=${dca}｜fee=${fee}｜slip=${slip}｜mrk=${mrk}｜mrn=${mrn}｜momk=${momk}｜p0=${series[0]?.toFixed?.(2)}｜p1=${series[1]?.toFixed?.(2)}</li>
-    ${tradeNote}`;
+    ${tradeNote}
+    ${fbNote}`;
   document.getElementById('tx').innerHTML = tx.slice(0,20).map(t=>`<li>${t}</li>`).join('') || '<li>（無交易紀錄）</li>';
 }
 
